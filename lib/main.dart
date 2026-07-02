@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'presentation/screens/list_pronosticos_screen.dart';
+
+import 'presentation/screens/login_screen.dart';
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,11 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'App de Pronósticos',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        useMaterial3: true,
-      ),
-      home: const ListPronosticosScreen(),
+      theme: ThemeData(primarySwatch: Colors.green, useMaterial3: true),
+      home: const LoginScreen(),
     );
   }
 }

@@ -36,9 +36,9 @@ const verificarToken = (req, res, next) => {
 };
 
 app.post('/api/auth/registro', async (req, res) => {
-  const { correo, password } = req.body;
+  const { nombre, password } = req.body;
   
-  if (!correo || !password) {
+  if (!nombre || !password) {
     return res.status(400).json({ error: 'Correo y contraseña obligatorios.' });
   }
 
@@ -47,8 +47,8 @@ app.post('/api/auth/registro', async (req, res) => {
     const passwordEncriptada = await bcrypt.hash(password, salt);
 
     await pool.query(
-      'INSERT INTO public.usuarios (correo, password) VALUES ($1, $2)',
-      [correo, passwordEncriptada]
+      'INSERT INTO public.usuarios (nombre, password) VALUES ($1, $2)',
+      [nombre, passwordEncriptada]
     );
 
     res.status(201).json({ mensaje: 'Usuario registrado.' });
@@ -58,14 +58,14 @@ app.post('/api/auth/registro', async (req, res) => {
 });
 
 app.post('/api/auth/login', async (req, res) => {
-  const { correo, password } = req.body;
+  const { nombre, password } = req.body;
 
-  if (!correo || !password) {
+  if (!nombre || !password) {
     return res.status(400).json({ error: 'Campos incompletos.' });
   }
 
   try {
-    const userResult = await pool.query('SELECT * FROM public.usuarios WHERE correo = $1', [correo]);
+    const userResult = await pool.query('SELECT * FROM public.usuarios WHERE nombre = $1', [nombre]);
     if (userResult.rows.length === 0) {
       return res.status(400).json({ error: 'Credenciales inválidas.' });
     }
